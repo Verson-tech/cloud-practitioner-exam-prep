@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWS Cloud Practitioner Exam Tracker</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #232f3e 0%, #131a22 100%);
+        color: white;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 20px 0;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        background: linear-gradient(45deg, #ff9900, #ffb84d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        color: #aab7b8;
+        font-size: 1.1rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .tiles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+
+      .tile {
+        background: linear-gradient(145deg, #2c3e50 0%, #34495e 100%);
+        border: 2px solid transparent;
+        border-radius: 12px;
+        padding: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tile::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, #ff9900, #ffb84d);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 10px;
+      }
+
+      .tile:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(255, 153, 0, 0.3);
+      }
+
+      .tile:hover::before {
+        opacity: 0.1;
+      }
+
+      .tile-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .tile-number {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #ff9900;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .tile-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #ecf0f1;
+      }
+
+      .tile-description {
+        color: #bdc3c7;
+        font-size: 0.95rem;
+        line-height: 1.4;
+      }
+
+      .progress-indicator {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #e74c3c;
+        transition: background 0.3s ease;
+      }
+
+      .tile.completed .progress-indicator {
+        background: #27ae60;
+      }
+
+      .detail-page {
+        display: none;
+        background: #2c3e50;
+        border-radius: 12px;
+        padding: 40px;
+        margin-top: 20px;
+        border: 2px solid #ff9900;
+      }
+
+      .detail-page.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .detail-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #34495e;
+      }
+
+      .detail-title {
+        font-size: 2rem;
+        color: #ff9900;
+      }
+
+      .close-btn {
+        background: #e74c3c;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.3s ease;
+      }
+
+      .close-btn:hover {
+        background: #c0392b;
+      }
+
+      .detail-content {
+        display: grid;
+        gap: 30px;
+      }
+
+      .description-section,
+      .code-section {
+        background: #34495e;
+        padding: 25px;
+        border-radius: 8px;
+        border-left: 4px solid #ff9900;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+        color: #ecf0f1;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      .description-text {
+        color: #bdc3c7;
+        line-height: 1.6;
+        margin-bottom: 15px;
+      }
+
+      .code-snippet {
+        background: #1e1e1e;
+        border: 1px solid #444;
+        border-radius: 6px;
+        padding: 20px;
+        font-family: "Courier New", monospace;
+        color: #f8f8f2;
+        overflow-x: auto;
+        margin-bottom: 15px;
+      }
+
+      .complete-btn {
+        background: linear-gradient(45deg, #27ae60, #2ecc71);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+      }
+
+      .complete-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .tiles-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .detail-page {
+          padding: 20px;
+        }
+
+        .detail-header {
+          flex-direction: column;
+          gap: 15px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>AWS Cloud Practitioner Exam Tracker</h1>
+        <p>Master the fundamentals of AWS cloud computing</p>
+      </div>
+
+      <div class="tiles-grid" id="tilesGrid">
+        <!-- Tiles will be generated by JavaScript -->
+      </div>
+
+      <div class="detail-page" id="detailPage">
+        <div class="detail-header">
+          <h2 class="detail-title" id="detailTitle"></h2>
+          <button class="close-btn" onclick="closeDetail()">Close</button>
+        </div>
+        <div class="detail-content">
+          <div class="description-section">
+            <h3 class="section-title">Description</h3>
+            <div class="description-text" id="detailDescription"></div>
+          </div>
+          <div class="code-section">
+            <h3 class="section-title">Code Examples & CLI Commands</h3>
+            <div id="detailCode"></div>
+          </div>
+          <button
+            class="complete-btn"
+            onclick="markComplete()"
+            id="completeBtn"
+          >
+            Mark as Complete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const examTopics = [
+        {
+          id: 1,
+          title: "Cloud Computing Fundamentals",
+          description: "Core concepts of cloud computing",
+          detailDescription:
+            "Cloud computing is the on-demand delivery of IT resources over the Internet with pay-as-you-go pricing. Instead of buying, owning, and maintaining physical data centers and servers, you can access technology services on an as-needed basis from cloud providers like AWS. The main benefits include cost savings, scalability, reliability, and speed of deployment.",
+          code: `# Key Cloud Computing Models
+# 1. Infrastructure as a Service (IaaS) - EC2, VPC
+# 2. Platform as a Service (PaaS) - Elastic Beanstalk
+# 3. Software as a Service (SaaS) - WorkMail, WorkDocs
+
+# AWS Global Infrastructure
+aws ec2 describe-regions
+aws ec2 describe-availability-zones --region us-east-1`,
+        },
+        {
+          id: 2,
+          title: "AWS Identity Access Management",
+          description: "User permissions and security controls",
+          detailDescription:
+            "AWS Identity and Access Management (IAM) enables you to manage access to AWS services and resources securely. Using IAM, you can create and manage AWS users and groups, and use permissions to allow and deny their access to AWS resources. IAM is a feature of your AWS account offered at no additional charge.",
+          code: `# Create IAM user
+aws iam create-user --user-name ExampleUser
+
+# Create IAM policy
+aws iam create-policy --policy-name ExamplePolicy --policy-document file://policy.json
+
+# Attach policy to user
+aws iam attach-user-policy --user-name ExampleUser --policy-arn arn:aws:iam::123456789012:policy/ExamplePolicy`,
+        },
+        {
+          id: 3,
+          title: "Amazon EC2 Instances",
+          description: "Virtual servers in the cloud",
+          detailDescription:
+            "Amazon Elastic Compute Cloud (EC2) is a web service that provides secure, resizable compute capacity in the cloud. It is designed to make web-scale cloud computing easier for developers. EC2's simple web service interface allows you to obtain and configure capacity with minimal friction.",
+          code: `# Launch EC2 instance
+aws ec2 run-instances --image-id ami-0abcdef1234567890 --count 1 --instance-type t2.micro --key-name MyKeyPair
+
+# List instances
+aws ec2 describe-instances
+
+# Stop instance
+aws ec2 stop-instances --instance-ids i-1234567890abcdef0`,
+        },
+        {
+          id: 4,
+          title: "Amazon S3 Storage",
+          description: "Scalable object storage service",
+          detailDescription:
+            "Amazon Simple Storage Service (S3) is an object storage service that offers industry-leading scalability, data availability, security, and performance. You can use S3 to store and retrieve any amount of data at any time, from anywhere on the web. S3 provides multiple storage classes for different use cases.",
+          code: `# Create S3 bucket
+aws s3 mb s3://my-bucket-name
+
+# Upload file to S3
+aws s3 cp myfile.txt s3://my-bucket-name/
+
+# List S3 objects
+aws s3 ls s3://my-bucket-name/
+
+# Sync directory to S3
+aws s3 sync ./local-folder s3://my-bucket-name/remote-folder/`,
+        },
+        {
+          id: 5,
+          title: "Amazon VPC Networking",
+          description: "Virtual private cloud networking",
+          detailDescription:
+            "Amazon Virtual Private Cloud (VPC) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define. You have complete control over your virtual networking environment, including selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways.",
+          code: `# Create VPC
+aws ec2 create-vpc --cidr-block 10.0.0.0/16
+
+# Create subnet
+aws ec2 create-subnet --vpc-id vpc-12345678 --cidr-block 10.0.1.0/24
+
+# Create internet gateway
+aws ec2 create-internet-gateway`,
+        },
+        {
+          id: 6,
+          title: "Amazon RDS Databases",
+          description: "Managed relational database service",
+          detailDescription:
+            "Amazon Relational Database Service (RDS) makes it easy to set up, operate, and scale a relational database in the cloud. It provides cost-efficient and resizable capacity while automating time-consuming administration tasks such as hardware provisioning, database setup, patching, and backups.",
+          code: `# Create RDS instance
+aws rds create-db-instance --db-instance-identifier mydbinstance --db-instance-class db.t3.micro --engine mysql --master-username admin --master-user-password mypassword --allocated-storage 20
+
+# List RDS instances
+aws rds describe-db-instances`,
+        },
+        {
+          id: 7,
+          title: "AWS Lambda Functions",
+          description: "Serverless compute service",
+          detailDescription:
+            "AWS Lambda lets you run code without provisioning or managing servers. You pay only for the compute time you consume. With Lambda, you can run code for virtually any type of application or backend service - all with zero administration. Lambda runs your code on a high-availability compute infrastructure.",
+          code: `# Create Lambda function
+aws lambda create-function --function-name MyFunction --runtime python3.9 --role arn:aws:iam::123456789012:role/execution_role --handler lambda_function.lambda_handler --zip-file fileb://function.zip
+
+# Invoke Lambda function
+aws lambda invoke --function-name MyFunction --payload '{"key":"value"}' response.json`,
+        },
+        {
+          id: 8,
+          title: "Amazon CloudWatch Monitoring",
+          description: "Monitoring and observability service",
+          detailDescription:
+            "Amazon CloudWatch is a monitoring and observability service built for DevOps engineers, developers, site reliability engineers (SREs), and IT managers. CloudWatch provides data and actionable insights to monitor applications, respond to system-wide performance changes, optimize resource utilization, and get a unified view of operational health.",
+          code: `# Create CloudWatch alarm
+aws cloudwatch put-metric-alarm --alarm-name cpu-mon --alarm-description "Alarm when CPU exceeds 70%" --metric-name CPUUtilization --namespace AWS/EC2 --statistic Average --period 300 --threshold 70.0 --comparison-operator GreaterThanThreshold
+
+# List CloudWatch metrics
+aws cloudwatch list-metrics --namespace AWS/EC2`,
+        },
+        {
+          id: 9,
+          title: "Amazon Route 53 DNS",
+          description: "Scalable domain name system",
+          detailDescription:
+            "Amazon Route 53 is a highly available and scalable cloud Domain Name System (DNS) web service. It is designed to give developers and businesses an extremely reliable and cost-effective way to route end users to Internet applications by translating names like www.example.com into numeric IP addresses.",
+          code: `# Create hosted zone
+aws route53 create-hosted-zone --name example.com --caller-reference 2023-01-01-01
+
+# List hosted zones
+aws route53 list-hosted-zones
+
+# Create DNS record
+aws route53 change-resource-record-sets --hosted-zone-id Z123456789 --change-batch file://change-batch.json`,
+        },
+        {
+          id: 10,
+          title: "AWS CloudFormation Templates",
+          description: "Infrastructure as code service",
+          detailDescription:
+            "AWS CloudFormation provides a common language for you to model and provision AWS and third-party application resources in your cloud environment. CloudFormation allows you to use programming languages or a simple text file to model and provision, in an automated and secure manner, all the resources needed for your applications.",
+          code: `# Deploy CloudFormation stack
+aws cloudformation create-stack --stack-name my-stack --template-body file://template.yaml --parameters ParameterKey=KeyName,ParameterValue=MyKey
+
+# List CloudFormation stacks
+aws cloudformation list-stacks
+
+# Update stack
+aws cloudformation update-stack --stack-name my-stack --template-body file://updated-template.yaml`,
+        },
+        {
+          id: 11,
+          title: "Amazon SNS Notifications",
+          description: "Simple notification service",
+          detailDescription:
+            "Amazon Simple Notification Service (SNS) is a highly available, durable, secure, fully managed pub/sub messaging service that enables you to decouple microservices, distributed systems, and event-driven serverless applications. SNS provides topics for high-throughput, push-based, many-to-many messaging.",
+          code: `# Create SNS topic
+aws sns create-topic --name MyTopic
+
+# Subscribe to topic
+aws sns subscribe --topic-arn arn:aws:sns:us-east-1:123456789012:MyTopic --protocol email --notification-endpoint myemail@example.com
+
+# Publish message
+aws sns publish --topic-arn arn:aws:sns:us-east-1:123456789012:MyTopic --message "Hello World"`,
+        },
+        {
+          id: 12,
+          title: "Amazon SQS Queues",
+          description: "Simple queue service",
+          detailDescription:
+            "Amazon Simple Queue Service (SQS) is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications. SQS eliminates the complexity and overhead associated with managing and operating message-oriented middleware.",
+          code: `# Create SQS queue
+aws sqs create-queue --queue-name MyQueue
+
+# Send message to queue
+aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue --message-body "Hello SQS"
+
+# Receive messages
+aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue`,
+        },
+        {
+          id: 13,
+          title: "AWS Security Best Practices",
+          description: "Security principles and recommendations",
+          detailDescription:
+            "AWS security is built on a foundation of core principles: maintaining the confidentiality, integrity, and availability of your data and cloud resources. The AWS Shared Responsibility Model defines security responsibilities between AWS and customers. Understanding and implementing security best practices is crucial for protecting your AWS environment.",
+          code: `# Enable MFA for root account
+aws iam create-virtual-mfa-device --virtual-mfa-device-name root-account-mfa-device --path /
+
+# Enable CloudTrail logging
+aws cloudtrail create-trail --name myCloudTrail --s3-bucket-name myCloudTrail-bucket
+
+# Configure security group
+aws ec2 create-security-group --group-name MySecurityGroup --description "My security group" --vpc-id vpc-12345678`,
+        },
+        {
+          id: 14,
+          title: "AWS Pricing Models",
+          description: "Cost optimization and billing",
+          detailDescription:
+            "AWS offers multiple pricing models to help you optimize costs based on your needs. These include On-Demand (pay for what you use), Reserved Instances (commit to usage for discounts), Spot Instances (bid for unused capacity), and Savings Plans (flexible pricing model). Understanding these options helps optimize costs.",
+          code: `# View AWS billing and cost management
+aws ce get-cost-and-usage --time-period Start=2023-01-01,End=2023-01-31 --granularity MONTHLY --metrics BlendedCost
+
+# Create budget
+aws budgets create-budget --account-id 123456789012 --budget file://budget.json
+
+# List Reserved Instances
+aws ec2 describe-reserved-instances`,
+        },
+        {
+          id: 15,
+          title: "AWS Support Plans",
+          description: "Technical support options",
+          detailDescription:
+            "AWS offers four support plans: Basic (free), Developer ($29/month), Business ($100/month), and Enterprise ($15,000/month). Each plan provides different levels of support, response times, and access to AWS experts. Choose based on your business needs and criticality of your AWS workloads.",
+          code: `# Create support case (requires Business or Enterprise support)
+aws support create-case --subject "My support case" --service-code "amazon-ec2" --severity-code "low" --category-code "instance-issue" --communication-body "Description of the issue"
+
+# List support cases
+aws support describe-cases`,
+        },
+        {
+          id: 16,
+          title: "AWS Well-Architected Framework",
+          description: "Best practices for cloud architecture",
+          detailDescription:
+            "The AWS Well-Architected Framework describes key concepts, design principles, and architectural best practices for designing and running workloads in the cloud. The framework is based on six pillars: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, and Sustainability.",
+          code: `# Well-Architected Tool commands
+aws wellarchitected list-workloads
+
+# Create workload review
+aws wellarchitected create-workload --workload-name "MyWorkload" --description "Sample workload" --environment PRODUCTION --review-owner "architect@company.com"
+
+# Architecture principles in CloudFormation
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0abcdef1234567890
+      InstanceType: t3.micro
+      Tags:
+        - Key: Purpose
+          Value: WellArchitected`,
+        },
+        {
+          id: 17,
+          title: "Amazon EBS Storage",
+          description: "Block storage for EC2",
+          detailDescription:
+            "Amazon Elastic Block Store (EBS) provides high-performance block storage for use with EC2 instances. EBS volumes are highly available and reliable storage volumes that can be attached to any running instance in the same Availability Zone. EBS offers different volume types optimized for different use cases.",
+          code: `# Create EBS volume
+aws ec2 create-volume --size 80 --region us-east-1 --availability-zone us-east-1a --volume-type gp3
+
+# Attach volume to instance
+aws ec2 attach-volume --volume-id vol-1234567890abcdef0 --instance-id i-1234567890abcdef0 --device /dev/sdf
+
+# Create snapshot
+aws ec2 create-snapshot --volume-id vol-1234567890abcdef0 --description "My snapshot"`,
+        },
+        {
+          id: 18,
+          title: "AWS Auto Scaling",
+          description: "Automatic capacity management",
+          detailDescription:
+            "AWS Auto Scaling monitors your applications and automatically adjusts capacity to maintain steady, predictable performance at the lowest possible cost. Using Auto Scaling, it's easy to setup application scaling for multiple resources across multiple services in minutes.",
+          code: `# Create launch template
+aws ec2 create-launch-template --launch-template-name MyLaunchTemplate --version-description "Version 1" --launch-template-data file://launch-template-data.json
+
+# Create Auto Scaling group
+aws autoscaling create-auto-scaling-group --auto-scaling-group-name MyAutoScalingGroup --launch-template LaunchTemplateName=MyLaunchTemplate,Version=1 --min-size 1 --max-size 3 --desired-capacity 2`,
+        },
+        {
+          id: 19,
+          title: "Elastic Load Balancing",
+          description: "Distribute traffic across instances",
+          detailDescription:
+            "Elastic Load Balancing automatically distributes incoming application traffic across multiple targets, such as Amazon EC2 instances, containers, IP addresses, Lambda functions, and virtual appliances. It can handle the varying load of your application traffic in a single Availability Zone or across multiple Availability Zones.",
+          code: `# Create Application Load Balancer
+aws elbv2 create-load-balancer --name MyLoadBalancer --subnets subnet-12345678 subnet-87654321
+
+# Create target group
+aws elbv2 create-target-group --name MyTargets --protocol HTTP --port 80 --vpc-id vpc-12345678
+
+# Register targets
+aws elbv2 register-targets --target-group-arn arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/MyTargets/1234567890123456 --targets Id=i-1234567890abcdef0`,
+        },
+        {
+          id: 20,
+          title: "AWS Migration Strategies",
+          description: "Moving workloads to AWS",
+          detailDescription:
+            "AWS provides various migration strategies known as the '6 Rs': Rehost (lift-and-shift), Replatform (lift-tinker-and-shift), Repurchase (drop-and-shop), Refactor/re-architect, Retire, and Retain. Each strategy offers different benefits and complexity levels for moving applications to the cloud.",
+          code: `# AWS Application Migration Service
+aws mgn initialize-service
+
+# Create migration job
+aws mgn start-replication --source-server-id s-1234567890abcdef0
+
+# AWS Database Migration Service
+aws dms create-replication-instance --replication-instance-identifier myrepinstance --replication-instance-class dms.t3.micro
+
+# Migration assessment
+aws migrationhub list-migration-tasks`,
+        },
+      ];
+
+      let completedTopics = [];
+      let currentTopicId = null;
+
+      function renderTiles() {
+        const grid = document.getElementById("tilesGrid");
+        grid.innerHTML = "";
+
+        examTopics.forEach((topic) => {
+          const tile = document.createElement("div");
+          tile.className = `tile ${
+            completedTopics.includes(topic.id) ? "completed" : ""
+          }`;
+          tile.onclick = () => openDetail(topic.id);
+
+          tile.innerHTML = `
+                    <div class="tile-content">
+                        <span class="tile-number">${topic.id
+                          .toString()
+                          .padStart(2, "0")}</span>
+                        <h3 class="tile-title">${topic.title}</h3>
+                        <p class="tile-description">${topic.description}</p>
+                    </div>
+                    <div class="progress-indicator"></div>
+                `;
+
+          grid.appendChild(tile);
+        });
+      }
+
+      function openDetail(topicId) {
+        const topic = examTopics.find((t) => t.id === topicId);
+        if (!topic) return;
+
+        currentTopicId = topicId;
+
+        document.getElementById("detailTitle").textContent = `${topicId
+          .toString()
+          .padStart(2, "0")}. ${topic.title}`;
+        document.getElementById("detailDescription").innerHTML =
+          topic.detailDescription;
+        document.getElementById(
+          "detailCode"
+        ).innerHTML = `<pre class="code-snippet">${topic.code}</pre>`;
+
+        const completeBtn = document.getElementById("completeBtn");
+        if (completedTopics.includes(topicId)) {
+          completeBtn.textContent = "Completed ✓";
+          completeBtn.style.background =
+            "linear-gradient(45deg, #27ae60, #2ecc71)";
+        } else {
+          completeBtn.textContent = "Mark as Complete";
+          completeBtn.style.background =
+            "linear-gradient(45deg, #3498db, #5dade2)";
+        }
+
+        document.getElementById("detailPage").classList.add("active");
+        document.getElementById("tilesGrid").style.display = "none";
+      }
+
+      function closeDetail() {
+        document.getElementById("detailPage").classList.remove("active");
+        document.getElementById("tilesGrid").style.display = "grid";
+        currentTopicId = null;
+      }
+
+      function markComplete() {
+        if (currentTopicId && !completedTopics.includes(currentTopicId)) {
+          completedTopics.push(currentTopicId);
+          renderTiles();
+
+          const completeBtn = document.getElementById("completeBtn");
+          completeBtn.textContent = "Completed ✓";
+          completeBtn.style.background =
+            "linear-gradient(45deg, #27ae60, #2ecc71)";
+        }
+      }
+
+      // Initialize the app
+      renderTiles();
+    </script>
+  </body>
+</html>
