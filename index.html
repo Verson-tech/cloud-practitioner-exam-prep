@@ -205,6 +205,18 @@
         margin-bottom: 15px;
       }
 
+      .description-text a {
+        color: #ff9900;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: all 0.3s ease;
+      }
+
+      .description-text a:hover {
+        color: #ffb84d;
+        border-bottom: 1px solid #ff9900;
+      }
+
       .code-snippet {
         background: #1e1e1e;
         border: 1px solid #444;
@@ -295,10 +307,11 @@
       const examTopics = [
         {
           id: 1,
-          title: "Cloud Computing Fundamentals",
+          title: "Intro & Cloud Computing Fundamentals (S. 3)",
           description: "Core concepts of cloud computing",
           detailDescription:
-            "Cloud computing is the on-demand delivery of IT resources over the Internet with pay-as-you-go pricing. Instead of buying, owning, and maintaining physical data centers and servers, you can access technology services on an as-needed basis from cloud providers like AWS. The main benefits include cost savings, scalability, reliability, and speed of deployment.",
+            "Cloud computing is the on-demand delivery of IT resources over the Internet with pay-as-you-go pricing. Instead of buying, owning, and maintaining physical data centers and servers, you can access technology services on an as-needed basis from cloud providers like AWS. The main benefits include cost savings, scalability, reliability, and speed of deployment. <br><br>Learn more: <a href='https://aws.amazon.com/what-is-cloud-computing/' target='_blank'>What is Cloud Computing?</a> | <a href='https://docs.aws.amazon.com/whitepapers/latest/aws-overview/introduction.html' target='_blank'>AWS Overview Whitepaper</a> | <a href='https://courses.datacumulus.com/downloads/certified-cloud-practitioner-zb2/' target='_blank'>AWS Certified Cloud Practitioner By Stéphane Maarek on Udemy</a>",
+          link: "https://aws.amazon.com/what-is-cloud-computing/",
           code: `# Key Cloud Computing Models
 # 1. Infrastructure as a Service (IaaS) - EC2, VPC
 # 2. Platform as a Service (PaaS) - Elastic Beanstalk
@@ -594,7 +607,7 @@ aws migrationhub list-migration-tasks`,
         },
       ];
 
-      let completedTopics = [];
+      let completedTopics = [1];
       let currentTopicId = null;
 
       function renderTiles() {
