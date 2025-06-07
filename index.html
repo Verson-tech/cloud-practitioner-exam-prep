@@ -323,7 +323,7 @@ aws ec2 describe-availability-zones --region us-east-1`,
         },
         {
           id: 2,
-          title: "AWS Identity Access Management",
+          title: "IAM - AWS Identity Access Management",
           description: "User permissions and security controls",
           detailDescription:
             "AWS Identity and Access Management (IAM) enables you to manage access to AWS services and resources securely. Using IAM, you can create and manage AWS users and groups, and use permissions to allow and deny their access to AWS resources. IAM is a feature of your AWS account offered at no additional charge.",
@@ -607,7 +607,7 @@ aws migrationhub list-migration-tasks`,
         },
       ];
 
-      let completedTopics = [1];
+      let completedTopics = [1, 2];
       let currentTopicId = null;
 
       function renderTiles() {
