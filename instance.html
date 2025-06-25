@@ -273,13 +273,16 @@
 
             <div class="sub-services">
               <div class="detail-tile">
-                Amazon EBS: used in the same AZ and can be attached to only one
-                EC2. EBS volumes can be recreated through EBS snapshot for other
-                EC2s in various AZ. EBS storage types: EBS, EBS Archive, Recycle
-                Bin, AMI
+                Amazon EBS: </br> - Used in the same AZ and can be attached to only one
+                EC2. </br> - EBS volumes can be recreated through EBS snapshot for other
+                EC2s in various AZ. </br>EBS Snapshot is a backup of your EBS Volume at a point in time" because EBS Snapshots serve exactly that purpose, allowing you to capture and save the state of your EBS Volume. This ensures data protection and can be crucial for recovery or replication, aligning well with essential cloud storage management practices. </br> - EBS storage types: EBS, EBS Archive, Recycle
+                Bin, AMI ("EC2 Image Builder" simplifies the process of creating
+                and managing images in an automated way, which aligns perfectly
+                with the goal of efficiently deploying consistent environments
+                in AWS).</br> - Amazon EBS (Elastic Block Store) volumes allow data to persist even after the associated EC2 instance is terminated, making them crucial for maintaining data integrity and availability.
               </div>
               <div class="detail-tile">
-                Instance Store temporary storage for EC2 Instances
+                Instance Store temporary storage for EC2 Instances: </br> - Instance store volumes are physically attached to the host computer and provide high I/O performance.</br> - Data stored in instance store volumes is lost when the instance is stopped or terminated, making it suitable for temporary data storage.</br> - Instance store volumes are ideal for applications that require high throughput and low latency, such as databases and data processing tasks.
               </div>
             </div>
           </div>
@@ -307,7 +310,9 @@
 
             <div class="sub-services">
               <div class="level-3">
-                <div class="service-tile">Amazon EFS</div>
+                <div class="service-tile">
+                  Amazon EFS 
+                </div>
                 <a
                   href="https://cloudvisor.co/aws-guides/amazon-efs-everything-you-need-to-know/#:~:text=powerful%20AWS%20service.-,What%20is%20Amazon%20EFS?,hosting%20to%20big%20data%20analytics."
                   target="_blank"
@@ -316,12 +321,15 @@
                 >
                 <div class="connection-line"></div>
                 <div class="detail-tile">
-                  EFS Amazon Elastic File System & EFS-IA(infrequent access)
+                  EFS Amazon Elastic File System & EFS-IA(infrequent access)</br>It provides general file storage for any type of
+                  applications.
                 </div>
               </div>
 
               <div class="level-3">
-                <div class="service-tile">Amazon FSx</div>
+                <div class="service-tile">
+                  Amazon FSx
+                </div>
                 <a
                   href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/storage_fsx.html"
                   target="_blank"
@@ -329,7 +337,12 @@
                   >Click here</a
                 >
                 <div class="connection-line"></div>
-                <div class="detail-tile">FSx 3rd party file systems</div>
+                <div class="detail-tile">FSx 3rd party file systems</br>Comes in two offerings:</br> - Amazon FSx is specifically designed to provide a
+                  fully managed file system that caters to Windows applications,
+                  making it ideal for businesses that rely on Microsoft’s
+                  ecosystem.</br> - Amazon FSx for Lustre is optimized for high-performance computing (HPC) workloads, providing a
+                  parallel file system that can handle large-scale data processing
+                  and analytics tasks efficiently.</div>
               </div>
             </div>
           </div>
