@@ -132,6 +132,9 @@
         padding: 40px;
         margin-top: 20px;
         border: 2px solid #ff9900;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
       }
 
       .detail-page.active {
@@ -182,6 +185,9 @@
       .detail-content {
         display: grid;
         gap: 30px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
       }
 
       .description-section,
@@ -190,6 +196,11 @@
         padding: 25px;
         border-radius: 8px;
         border-left: 4px solid #ff9900;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
       }
 
       .section-title {
@@ -203,6 +214,11 @@
         color: #bdc3c7;
         line-height: 1.6;
         margin-bottom: 15px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        max-width: 100%;
+        overflow-x: hidden;
       }
 
       .description-text a {
@@ -225,7 +241,14 @@
         font-family: "Courier New", monospace;
         color: #f8f8f2;
         overflow-x: auto;
+        overflow-y: hidden;
         margin-bottom: 15px;
+        max-width: 100%;
+        box-sizing: border-box;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-size: 0.9rem;
+        line-height: 1.4;
       }
 
       .complete-btn {
@@ -256,13 +279,93 @@
         }
 
         .detail-page {
-          padding: 20px;
+          padding: 15px;
+          margin: 10px;
+          border-radius: 8px;
         }
 
         .detail-header {
           flex-direction: column;
           gap: 15px;
           text-align: center;
+          margin-bottom: 20px;
+        }
+
+        .detail-title {
+          font-size: 1.5rem;
+        }
+
+        .detail-content {
+          gap: 20px;
+        }
+
+        .description-section,
+        .code-section {
+          padding: 15px;
+          margin: 0;
+          border-radius: 6px;
+        }
+
+        .section-title {
+          font-size: 1.1rem;
+        }
+
+        .description-text {
+          font-size: 0.9rem;
+          line-height: 1.5;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+
+        .code-snippet {
+          padding: 15px;
+          font-size: 0.8rem;
+          line-height: 1.3;
+          white-space: pre-wrap;
+          word-break: break-all;
+          overflow-wrap: break-word;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .detail-page {
+          padding: 10px;
+          margin: 5px;
+        }
+
+        .detail-content {
+          gap: 15px;
+        }
+
+        .description-section,
+        .code-section {
+          padding: 12px;
+        }
+
+        .section-title {
+          font-size: 1rem;
+        }
+
+        .description-text {
+          font-size: 0.85rem;
+          line-height: 1.4;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+          hyphens: auto;
+        }
+
+        .code-snippet {
+          padding: 10px;
+          font-size: 0.75rem;
+          line-height: 1.2;
+          white-space: pre-wrap;
+          word-break: break-all;
+          overflow-wrap: break-word;
+          border-radius: 4px;
+        }
+
+        .detail-title {
+          font-size: 1.3rem;
         }
       }
     </style>
