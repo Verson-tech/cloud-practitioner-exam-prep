@@ -506,15 +506,65 @@
         },
         {
           id: 7,
-          title: "AWS Lambda Functions",
+          title: "AWS Lambda Functions & AWS Batch",
           description: "Serverless compute service",
           detailDescription:
-            "AWS Lambda lets you run code without provisioning or managing servers. You pay only for the compute time you consume. With Lambda, you can run code for virtually any type of application or backend service - all with zero administration. Lambda runs your code on a high-availability compute infrastructure.",
+            "AWS Lambda lets you run code without provisioning or managing servers. You pay only for the compute time you consume. With Lambda, you can run code for virtually any type of application or backend service - all with zero administration. Lambda runs your code on a high-availability compute infrastructure. </br>Lambda is an event-driven function and it gets invoked by events such as changes in data, shifts in system state, or user actions. Lambda functions can be triggered by various AWS services, such as S3, DynamoDB, Kinesis, SNS, and API Gateway. </br>Lambda supports multiple programming languages, including Python, Node.js, Java, C#, Go, and Ruby. You can also use custom runtimes to run code written in other languages.</br>Lambda is often used for building serverless applications, automating tasks, processing data streams, and integrating with other AWS services.</br></br>Learn more: <a href='https://aws.amazon.com/lambda/' target='_blank'>AWS Lambda</a> | <a href='https://aws.amazon.com/lambda/features/' target='_blank'>AWS Lambda Features</a> | <a href='https://aws.amazon.com/lambda/pricing/' target='_blank'>AWS Lambda Pricing</a> </br></br>Lambda is a serverless compute service that allows you to run code without provisioning or managing servers. It automatically scales your applications by running code in response to events and triggers. Lambda supports various programming languages and integrates with other AWS services for event-driven architectures.</br></br>AWS Batch is a fully managed service that enables developers, scientists, and engineers to easily and efficiently run hundreds of thousands of batch computing jobs on AWS. It simplifies running batch jobs across multiple Availability Zones within a Region. AWS Batch handles the provisioning and scaling of resources, as well as job scheduling, eliminating the need to install or manage batch computing software yourself. </br></br>Learn more: <a href='https://aws.amazon.com/batch/' target='_blank'>AWS Batch</a></br></br>Integrate API Gateway with AWS Lambda to create serverless APIs.</br>Amazon API Gateway is a fully managed service that allows developers to create, publish, maintain, monitor, and secure APIs at any scale. It acts as a 'front door' for applications to access data, business logic, or functionality from backend services. Learn more: <a href='https://aws.amazon.com/apigateway/' target='_blank'>Amazon API Gateway</a></br></br>---------Lambda EXAMPLE-------------</br></br>You can simulate Cron job (a job scheduler on Unix-like operating systems like Linux) functionality within AWS by using AWS Lambda and Amazon EventBridge (formerly CloudWatch Events). This allows you to schedule serverless functions to run at specified intervals or times, just like traditional cron jobs, but without needing to manage servers.Here's a common example:</br></br>Scenario: You want to send a daily reminder email to users who haven't logged into your application in the past 7 days.</br>Solution using Lambda and EventBridge:</br>Create a Lambda Function:</br></br>Purpose: The function connects to the user database, identifies inactive users, and sends a reminder email.</br>Language: Python, Node.js, or Java can be used for the Lambda function",
           code: `# Create Lambda function
                                     aws lambda create-function --function-name MyFunction --runtime python3.9 --role arn:aws:iam::123456789012:role/execution_role --handler lambda_function.lambda_handler --zip-file fileb://function.zip
 
                                     # Invoke Lambda function
-                                    aws lambda invoke --function-name MyFunction --payload '{"key":"value"}' response.json`,
+                                    aws lambda invoke --function-name MyFunction --payload '{"key":"value"}' response.json
+                                    #Example (Python):
+                                    import boto3
+                                    import os
+
+                              def lambda_handler(event, context):
+                                  # Initialize AWS clients
+                                  dynamodb = boto3.resource('dynamodb')
+                                  ses = boto3.client('ses')
+
+                                  # Get environment variables (e.g., table name, sender email)
+                                  user_table_name = os.environ.get('USER_TABLE_NAME')
+                                  sender_email = os.environ.get('SENDER_EMAIL')
+
+                                  # Access your user database (e.g., DynamoDB)
+                                  user_table = dynamodb.Table(user_table_name)
+                                  response = user_table.scan(
+                                      FilterExpression=boto3.dynamodb.conditions.Attr('last_login').lt('current_date - 7 days') # Example filter
+                                  )
+                                  inactive_users = response['Items']
+
+                                  # Send email reminders
+                                  for user in inactive_users:
+                                      recipient_email = user.get('email')
+                                      if recipient_email:
+                                          try:
+                                              ses.send_email(
+                                                  Source=sender_email,
+                                                  Destination={
+                                                      'ToAddresses': [recipient_email]
+                                                  },
+                                                  Message={
+                                                      'Subject': {'Data': 'Reminder: Don\'t forget to log in!'},
+                                                      'Body': {'Text': {'Data': 'Hello, we noticed you haven\'t logged in recently. Come back and check out what\'s new!'}
+                                                      }
+                                                  }
+                                              )
+                                              print(f"Sent reminder to: {recipient_email}")
+                                          except Exception as e:
+                                              print(f"Error sending email to {recipient_email}: {e}")
+
+                                  return {
+                                      'statusCode': 200,
+                                      'body': 'Email reminders sent successfully!'
+                                  }
+                                    # List Lambda functions
+                                    aws lambda list-functions
+
+                                    # Update Lambda function code
+                                    aws lambda update-function-code --function-name MyFunction --zip-file fileb://updated_function.zip      
+`,
         },
         {
           id: 8,
