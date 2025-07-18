@@ -416,13 +416,13 @@
             "Cloud computing is the on-demand delivery of IT resources over the Internet with pay-as-you-go pricing. Instead of buying, owning, and maintaining physical data centers and servers, you can access technology services on an as-needed basis from cloud providers like AWS. The main benefits include cost savings, scalability, reliability, and speed of deployment. <br><br>Learn more: <a href='https://aws.amazon.com/what-is-cloud-computing/' target='_blank'>What is Cloud Computing?</a> | <a href='https://docs.aws.amazon.com/whitepapers/latest/aws-overview/introduction.html' target='_blank'>AWS Overview Whitepaper</a> | <a href='https://courses.datacumulus.com/downloads/certified-cloud-practitioner-zb2/' target='_blank'>AWS Certified Cloud Practitioner By Stéphane Maarek on Udemy</a>",
           link: "https://aws.amazon.com/what-is-cloud-computing/",
           code: `# Key Cloud Computing Models
-                              # 1. Infrastructure as a Service (IaaS) - EC2, VPC
-                              # 2. Platform as a Service (PaaS) - Elastic Beanstalk
-                              # 3. Software as a Service (SaaS) - WorkMail, WorkDocs
+                                    # 1. Infrastructure as a Service (IaaS) - EC2, VPC
+                                    # 2. Platform as a Service (PaaS) - Elastic Beanstalk
+                                    # 3. Software as a Service (SaaS) - WorkMail, WorkDocs
 
-                              # AWS Global Infrastructure
-                              aws ec2 describe-regions
-                              aws ec2 describe-availability-zones --region us-east-1`,
+                                    # AWS Global Infrastructure
+                                    aws ec2 describe-regions
+                                    aws ec2 describe-availability-zones --region us-east-1`,
         },
         {
           id: 2,
@@ -431,13 +431,13 @@
           detailDescription:
             "AWS Identity and Access Management (IAM) enables you to manage access to AWS services and resources securely. Using IAM, you can create and manage AWS users and groups, and use permissions to allow and deny their access to AWS resources. IAM is a feature of your AWS account offered at no additional charge.",
           code: `# Create IAM user
-                              aws iam create-user --user-name ExampleUser
+                                    aws iam create-user --user-name ExampleUser
 
-                              # Create IAM policy
-                              aws iam create-policy --policy-name ExamplePolicy --policy-document file://policy.json
+                                    # Create IAM policy
+                                    aws iam create-policy --policy-name ExamplePolicy --policy-document file://policy.json
 
-                              # Attach policy to user
-                              aws iam attach-user-policy --user-name ExampleUser --policy-arn arn:aws:iam::123456789012:policy/ExamplePolicy`,
+                                    # Attach policy to user
+                                    aws iam attach-user-policy --user-name ExampleUser --policy-arn arn:aws:iam::123456789012:policy/ExamplePolicy`,
         },
         {
           id: 3,
@@ -447,16 +447,16 @@
           detailDescription:
             "Click here for <a href='instance.html' target='_blank'>Storage Options for EC2 instances</a> diagram. </br>In short, while EC2 instances provide the compute resources, EBS provides the persistent storage that you need to store your data and applications. </br>Amazon Elastic Compute Cloud (EC2) is a web service that provides secure, resizable compute capacity in the cloud. It is designed to make web-scale cloud computing easier for developers. EC2's simple web service interface allows you to obtain and configure capacity with minimal friction. Created EC2 instance in Free Tier (Free Tier provides 750 hours of eligible EC2 instance usage per month for 12 months from AWS account signup date). </br>* Elastic Block Store - EBS provides block-level storage volumes for use with EC2 instances. EBS volumes are highly available and reliable storage volumes that can be attached to any running instance in the same Availability Zone. EBS offers different volume types optimized for different use cases. EBS can be attached to only one EC2 instance Associate Level (Solutions Architect, Developer, SysOps Administrator) and Professional Level (Solutions Architect, DevOps Engineer). However, for io1 and io2 volume types: EBS Multi-Attach feature is available. EBS Volumes are designed to provide persistent storage for your data even after an instance is terminated, which is a key capability for managing stateful applications in AWS. </br>EBS Snapshot (backup) allows you to create point-in-time backups of your EBS volumes. Snapshots are stored in Amazon S3 and can be used to create new EBS volumes (in different AZ) or restore existing ones. Snapshots are incremental, meaning only the blocks that have changed since the last snapshot are saved, which saves storage space and costs.</br>EC2 Storage options: </br> - EBS Archive (EBS Snapshot Features) </br> - Recycle Bin (EBS Snapshot Features) </br> - EC2 Instance Store - high performance hardware disk attached to our EC2 instance. Lost if our instance is stopped / terminated</br> - EFS - Elastic File System (Managed NFS (Network File System) can be mounted on hundreds of EC2 (meaning, that hundreeds of EC2 have same file system). It works with Linux EC2 instances in multi-AZ. EFS is scalable, pay per use, no cpacity planning)</br>- EFS Infrequent Access (EFS-IA) - gives up to 92% of the cost on the stored data. EFS automatically moves your files based on the last time they were accessed (this can be defined in the Lifecycle Policy)</br> - Amazon FSx is a fully managed AWS service that provides feature-rich, high-performance file systems in the cloud. It is a fully managed native Microsoft Windows file system. It supports multiple file systems, including Windows File Server, Lustre, and NetApp ONTAP. Amazon FSx is designed for workloads that require shared file storage with high throughput and low latency. It integrates with other AWS services and provides automatic backups, scaling, and security features.</br>Learn more: <a href='https://aws.amazon.com/fsx/' target='_blank'>Amazon FSx</a>`</br>-------------------------------------</br>EBS vs EFS</br>* EBS can only be attached only to one instance in one AZ, but a snapshot could be created to move EBS from one AZ to another;</br>* EFS is a network file system and it is shared by whatever is mounted to it regardles of the AZ.</br>Learn more: <a href='https://aws.amazon.com/ec2/' target='_blank'>Amazon EC2</a> | <a href='https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html' target='_blank'>Using Amazon EBS Volumes</a> | <a href='https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-snapshots.html' target='_blank'>Using Amazon EBS Snapshots</a> </br>* An Amazon Machine Image (AMI) is a blueprint for launching EC2 instances. It essentially acts as a template containing the necessary information to create a virtual machine in the AWS cloud. An AMI includes the operating system, application server, and applications required to launch an instance. You can create your own AMIs or use pre-configured ones provided by AWS or the community. EC2 Image Builder: automatically build, test and distribute AMIs. EC2 Image Builder is a pipeline for the creation, maintenance, validation, sharing, and deployment of Linux or Windows images for use on AWS and on-premises.</br>Learn more: <a href='https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html' target='_blank'>Amazon Machine Images (AMIs)</a></br>-------------------------------------</br>",
           code: `# Launch EC2 instance
-                        ("ami-0abcdef1234567890" to be replaced with the actual ID of the AMI)
-                        aws ec2 run-instances --image-id ami-0abcdef1234567890 --count 1 --instance-type t2.micro--key-name MyKeyPair
+                              ("ami-0abcdef1234567890" to be replaced with the actual ID of the AMI)
+                              aws ec2 run-instances --image-id ami-0abcdef1234567890 --count 1 --instance-type t2.micro--key-name MyKeyPair
 
-                        # List instances aws ec2 describe-instances
+                              # List instances aws ec2 describe-instances
 
-                        # Stop instance (In a real scenario, replace this with the actual ID of
-                              the specific EC2 instance)
-                        aws ec2 stop-instances --instance-ids i-1234567890abcdef0
-                        #Important 🎯 steps to consider, when SSH login to AWS instance VM:
-                               - attaching IAM roles`,
+                              # Stop instance (In a real scenario, replace this with the actual ID of
+                                    the specific EC2 instance)
+                              aws ec2 stop-instances --instance-ids i-1234567890abcdef0
+                              #Important 🎯 steps to consider, when SSH login to AWS instance VM:
+                                     - attaching IAM roles`,
         },
         {
           id: 4,
@@ -466,13 +466,13 @@
           detailDescription:
             "AWS offers various scalability types and services to help you manage your applications and resources efficiently. These primarily fall into two main categories: </br></br>1. Vertical Scalability (Scale Up/Down):</br>This involves increasing or decreasing the capacity of a single resource, like an EC2 instance, by upgrading or downgrading its specifications.How it works: You resize an existing instance to have more CPU, memory, or storage.AWS Services: Amazon EC2 allows you to resize instances, and Amazon RDS lets you modify database instance types for vertical scaling. </br></br>2. Horizontal Scalability (Scale Out/In):</br>This involves adding or removing multiple instances of a resource to distribute the workload. This is also known as 'scale out' (adding resources) and 'scale in' (removing resources).How it works: You add more servers or instances behind a load balancer to handle increased traffic or processing needs.AWS Services: AWS enables horizontal scaling through:</br>EC2 Auto Scaling Groups: Automatically adjust the number of EC2 instances in a group based on demand.Elastic Load Balancing (ELB): Distributes incoming traffic across multiple instances to ensure no single instance is overloaded.Amazon ECS and EKS: Allows scaling containerized applications by adding or removing tasks/pods.</br></br>_______________________________________</br></br>Differences betwen the purpose of Elastic Load Balancer and Auto Scaling Groups: </br></br>Elastic Load Balancing (ELB) and Auto Scaling Groups (ASGs) are often used together, but they have distinct purposes in managing application traffic and resources: </br></br>* ELB's purpose is traffic management: ELB is primarily focused on distributing incoming application traffic across multiple healthy targets, such as EC2 instances. Its goal is to ensure that no single instance is overloaded and that traffic is evenly distributed, leading to improved application availability and performance. Think of it as a smart traffic manager directing cars to different lanes on a highway to prevent congestion. </br></br>Elastic Load Balancing (ELB) is an AWS service that distributes incoming application traffic across targets in one or more Availability Zones. It aims to improve application availability, fault tolerance, and scalability <a href='https://www.geeksforgeeks.org/load-balancer-system-design-interview-question/' target='_blank'>Using Amazon EBS Volumes</a> . AWS offers four types of load balancers: </br></br>Application Load Balancer (ALB): Routes HTTP/HTTPS traffic - Layer* 7.</br>Network Load Balancer (NLB): Handles TCP/UDP traffic*.</br>Gateway* Load Balancer (GLB): Used for deploying virtual appliances (A virtual appliance is essentially a pre-configured virtual machine image, a 'ready-to-go' software package). Layer* 3.</br>Classic Load Balancer (CLB): An older generation, recommended for EC2-Classic networks. Layer* 4 & 7</br></br>* ASG's purpose is resource management: ASG is designed to automatically adjust the number of EC2 instances in a group based on fluctuating demand. Its main objective is to ensure that your application always has the right amount of compute capacity to handle the current workload, scaling out (adding instances) when demand increases and scaling in (removing instances) when demand decreases. This helps maintain performance, optimize resource utilization, and reduce costs.</br></br>An Auto Scaling Group (ASG) is a logical collection of EC2 instances that function as a single unit for scaling and management. Its main purpose is to maintain the availability of your application and automatically adjust the number of instances based on demand.</br></br>AWS Auto Scaling provides different scaling strategies for ASGs: </br></br>Maintain current instance levels: Ensures a fixed number of instances are always running, automatically replacing unhealthy ones. </br></br>Manual scaling: Allows you to manually adjust the ASG's desired capacity.</br></br>Scheduled scaling: Scales the ASG based on a predetermined date and time, useful for predictable traffic patterns.</br></br>Dynamic scaling: Adjusts the ASG's capacity based on real-time changes in demand and performance metrics. This includes:</br></br>Target tracking scaling: Maintains a target value for a chosen metric (e.g., 50% average CPU utilization).</br></br>Step scaling: Scales based on predefined increments when a metric breaches a threshold.</br></br>Simple scaling: Triggers a fixed scaling action when a single metric exceeds a threshold (considered a legacy method).</br></br>Predictive scaling: Uses machine learning to forecast future demand and proactively scale the ASG in advance. </br></br>_______________________________________</br></br>_______________________________________  </br></br>_______________________________________</br></br>* TCP/UDP traffic meaning</br></br>TCP/UDP traffic refers to the data being sent over a network using either the Transmission Control Protocol (TCP) or the User Datagram Protocol (UDP). These are two different protocols that govern how data is formatted and transferred between devices on the internet. They essentially provide the rules for how applications can send and receive information over the network. </br></br>Here's a simplified explanation:</br></br>1. TCP (Transmission Control Protocol): </br></br>Imagine sending a registered letter with a return receipt requested. TCP is connection-oriented and prioritizes reliability. It establishes a connection between the sender and receiver, breaks the data into packets, ensures all packets arrive in the correct order, and retransmits any lost or corrupted packets. This process makes it slower but highly dependable. It's used for applications where data accuracy is crucial, like web browsing, email, and file transfers.</br></br>2. UDP (User Datagram Protocol): </br></br>Think of sending a regular postcard. UDP is connectionless and focuses on speed and efficiency. It sends data packets without establishing a connection or guaranteeing delivery or order. Some data might be lost, but it's much faster than TCP. UDP is used for applications where timely delivery is more important than perfect accuracy, like online gaming, video streaming, and voice calls. </br></br>In essence, TCP/UDP traffic refers to the flow of data using these two fundamental protocols, each chosen based on the application's needs for either reliable, ordered delivery (TCP) or fast, potentially less reliable transmission (UDP). </br></br>_______________________________________</br></br>* Gateway - In computing and networking, a gateway is a device or software that connects two different networks and allows communication between them.</br></br>_______________________________________</br></br>*DNS - Domain Name System (DNS) is a hierarchical and decentralized naming system used to translate human-readable domain names (like www.example.com) into IP addresses. It acts as the phonebook of the internet, enabling users to access websites and services using easy-to-remember names instead of numerical IP addresses. DNS servers store and manage these mappings, allowing for efficient and reliable domain name resolution. DNS is essential for the functioning of the internet, as it ensures that users can reach websites and services without needing to remember complex numerical addresses.</br></br>_______________________________________</br></br>* OSI (Open Systems Interconnection - provides a standardized way of understanding and describing how different computer systems communicate with each other over a network) Model (Networking Layers):</br></br>AWS services interact with the various layers of the OSI model, which is a conceptual framework for understanding how networks work. The OSI model has seven layers:</br></br>Physical Layer (Layer 1): Deals with the physical transmission of data (cables, network cards). In AWS, this would include the underlying infrastructure of data centers and the physical network connections.</br></br>Data Link Layer (Layer 2): Responsible for node-to-node data transfer within a local network segment, using MAC addresses and frames. AWS VPCs and subnets relate to this layer.</br></br>Network Layer (Layer 3): Handles routing and forwarding data packets across different networks using IP addresses. AWS services like Amazon Route 53 and Internet Gateways operate at this layer.</br></br>Transport Layer (Layer 4): Ensures reliable data transmission between devices and manages connections using protocols like TCP and UDP.</br></br>Session Layer (Layer 5): Manages sessions and connections between applications.</br></br>Presentation Layer (Layer 6): Translates data into a format that can be understood by applications (e.g., encryption/decryption).</br></br>Application Layer (Layer 7): Provides network services to end-user applications (e.g., HTTP for web browsing). AWS services like Application Load Balancer (ALB) and API Gateway operate at this layer.",
           code: `# Create Application Load Balancer
-                              aws elbv2 create-load-balancer --name MyLoadBalancer --subnets subnet-12345678 subnet-87654321
+                                    aws elbv2 create-load-balancer --name MyLoadBalancer --subnets subnet-12345678 subnet-87654321
 
-                              # Create target group
-                              aws elbv2 create-target-group --name MyTargets --protocol HTTP --port 80 --vpc-id vpc-12345678
+                                    # Create target group
+                                    aws elbv2 create-target-group --name MyTargets --protocol HTTP --port 80 --vpc-id vpc-12345678
 
-                              # Register targets
-                              aws elbv2 register-targets --target-group-arn arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/MyTargets/1234567890123456 --targets Id=i-1234567890abcdef0`,
+                                    # Register targets
+                                    aws elbv2 register-targets --target-group-arn arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/MyTargets/1234567890123456 --targets Id=i-1234567890abcdef0`,
         },
         {
           id: 5,
@@ -481,16 +481,16 @@
           detailDescription:
             "Amazon Simple Storage Service (S3) is an object storage service that offers industry-leading scalability, data availability, security, and performance. You can use S3 to store and retrieve any amount of data at any time, from anywhere on the web. S3 provides multiple storage classes for different use cases.</br></br>* <a href='https://miro.com/diagramming/what-is-s3-aws/' target='_blank'>Amazon S3</a> </br></br>* <a href='https://aws.amazon.com/blogs/security/iam-policies-and-bucket-policies-and-acls-oh-my-controlling-access-to-s3-resources/#:~:text=S3%20bucket%20policies,DELETE%20objects%20in%20the%20bucket.)' target='_blank'>Bucket Policies</a></br></br>* <a href='https://aws.amazon.com/blogs/security/iam-policies-and-bucket-policies-and-acls-oh-my-controlling-access-to-s3-resources/#:~:text=S3%20bucket%20policies,DELETE%20objects%20in%20the%20bucket.)' target='_blank'>S3 ACLs (Access Control Lists) are a legacy access control mechanism that predates IAM. By default, object ownership is set to the bucket owner enforced setting, and all ACLs are disabled</a></br></br>* <a href='https://notes.kodekloud.com/docs/AWS-Solutions-Architect-Associate-Certification/Services-Storage/S3-Versioning' target='_blank'>S3 Versioning</a></br></br>* <a href='https://aws.amazon.com/s3/features/replication/#:~:text=getting%20started%20tutorial-,Overview,buckets%20to%20your%20data%20lake.' target='_blank'>Amazon S3 Replication</a></br></br>* <a href='https://aws.amazon.com/s3/storage-classes/#topic-0' target='_blank'>Amazon S3 Storage Classes</a></br></br>* <a href='https://docs.aws.amazon.com/amazon-s3-encryption-client/latest/developerguide/client-server-side.html#:~:text=Note,to%20storage%20in%20Amazon%20S3.' target='_blank'>Client-side and server-side encryption</a> | <a href='https://docs.aws.amazon.com/prescriptive-guidance/latest/encryption-best-practices/s3.html' target='_blank'>Encryption best practices for Amazon S3</a></br></br>In AWS, encryption is the process of converting data into an unreadable format (ciphertext) using an algorithm and an encryption key. Only someone with the correct decryption key can reverse this process and make the data readable again.</br></br>* <a href='https://www.cloudseedrive.com/iam-access-analyzer-amazon-s3/' target='_blank'>Benefits & Challenges of IAM Access Analyzer for Amazon S3</a> | <a href='https://repost.aws/questions/QUirCfcb4GT0SnoLiVsFYjbw/how-to-determine-s3-bucket-public-access-status-in-aws-console-or-cli-after-iam-access-analyzer-update' target='_blank'>How to Determine S3 Bucket Public Access Status in AWS Console or CLI After IAM Access Analyzer Update</a></br></br>IAM Access Analyzer for Amazon S3 is a powerful AWS tool that helps you proactively identify and address potential security vulnerabilities related to access to your S3 buckets. Identifies External Access: Access Analyzer for S3 scans your S3 bucket policies, Access Control Lists (ACLs), and access point policies to identify any configurations that grant access to external entities. These external entities can be other AWS accounts, IAM users or roles outside your organization, or even public users on the internet.</br></br>* <a href='https://aws.amazon.com/snowball/#:~:text=How%20AWS%20Snowball%20works,sanitized%20of%20any%20customer%20information.' target='_blank'>AWS Snowball</a> | <a href='https://aws.amazon.com/snowball/features/#topic-0' target='_blank'>AWS Snowball features (AWS Snowball Edge Compute Optimized vs. AWS Snowball Edge Storage Optimized)</a></br></br>AWS Snowball is a service that utilizes rugged, portable hardware devices to transfer large amounts of data into and out of the AWS cloud. It's designed for situations where transferring data over the internet is slow, expensive, or impractical due to limited network connectivity.</br>Edge computing capabilities: AWS Snowball Edge devices offer optional compute power, allowing you to process data locally in environments with limited or no connectivity (a truck on the road, a remote oil rig, etc.). This is particularly useful for applications that require real-time data processing or analysis before sending the results to the cloud. The pricing is based on the amount of data transferred, the number of devices used, and the duration of the job. The only thing you don't pay for is data input to S3.</br></br>* <a href='https://aws.amazon.com/storagegateway/features/#:~:text=You%20can%20use%20Storage%20Gateway,AWS%20for%20on%2Dpremises%20applications.' target='_blank'>AWS Storage Gateway</a> </br>AWS Storage Gateway is a hybrid cloud storage service that allows you to connect your on-premises infrastructure to AWS Cloud storage. It acts as a bridge, enabling your on-premises applications to seamlessly use cloud storage services like Amazon S3, S3 Glacier, Amazon EBS, and Amazon FSx for Windows File Server.</br></br>* <a href='https://medium.com/avmconsulting-blog/aws-s3-lifecycle-management-1ed2f67c3b73' target='_blank'>AWS S3 Lifecycle Management</a> </br>Lifecycle Management is used so that objects are stored cost-effectively throughout their lifecycle. A lifecycle configuration is a set of rules (Transition actions & Expiration actions) that define the actions applied by S3 to a group of objects.",
           code: `# Create S3 bucket
-      aws s3 mb s3://my-bucket-name
+            aws s3 mb s3://my-bucket-name
 
-      # Upload file to S3
-      aws s3 cp myfile.txt s3://my-bucket-name/
+            # Upload file to S3
+            aws s3 cp myfile.txt s3://my-bucket-name/
 
-      # List S3 objects
-      aws s3 ls s3://my-bucket-name/
+            # List S3 objects
+            aws s3 ls s3://my-bucket-name/
 
-      # Sync directory to S3
-      aws s3 sync ./local-folder s3://my-bucket-name/remote-folder/`,
+            # Sync directory to S3
+            aws s3 sync ./local-folder s3://my-bucket-name/remote-folder/`,
         },
         {
           id: 6,
@@ -499,10 +499,10 @@
           detailDescription:
             "Relational vs. NoSQL Databases: </br></br> * Relational databases are structured and use SQL for querying. Relational databases are ideal for structured data with complex relationships. </br> -  use tables with rows and columns. </br> - enforce strict schemas and relationships. </br> - are typically used for applications with complex queries and transactions.</br></br> * NoSQL databases are unstructured and can store various data types (JSON). </br> - are better suited for unstructured or semi-structured data with flexible schemas.</br> -  can use key-value pairs, documents, graphs, or wide-column stores.</br> - allow for more flexibility in data structure. </br> - are often used for big data, real-time analytics, and applications with high scalability requirements.</br></br>_______________________________________</br></br> 1. <a href='https://aws.amazon.com/rds/' target='_blank'>Amazon RDS (Relational databases using SQL)</a> Overview:</br>RDS stands for Relational Database Service. It is a managed DB service that uses SQL query language. RDS allows to create databases in the cloud that are managed by AWS. Amazon Relational Database Sevice (Amazon RDS) is a SQL managed service that makes it easy to set up, operate and scale realtional databases in the cloud. It is suitable for OLTP (Online Transaction Processing) workloads</br></br>Amazon RDS (Relational Database Service) is a managed database service provided by AWS that simplifies the setup, operation, and scaling of relational databases in the cloud. It supports multiple database engines, including MySQL, PostgreSQL, MariaDB, Oracle, Microsoft SQL Server, and Amazon Aurora. RDS automates routine tasks such as backups, patching, and scaling, allowing users to focus on application development rather than database management. It provides high availability through Multi-AZ deployments and read replicas for improved performance. RDS also offers security features like encryption at rest and in transit, IAM integration, and VPC support to ensure data protection and compliance. Overall, Amazon RDS is designed to make it easier for developers to deploy and manage relational databases in a scalable and cost-effective manner.</br>Relational database management systems (RDBMS):</br> - Postgres</br> - MySQL</br> - MariaDB</br> - Oracle</br> - Microsoft SQL Server</br> - IBM DB2</br> - <a href='https://aws.amazon.com/rds/aurora/' target='_blank'>Amazon Aurora</a> - MySQL and PostgreSQL-compatible relational database service that offers high performance, scalability, and availability. It is designed to provide the performance of high-end commercial databases at a fraction of the cost. Aurora automatically scales storage and compute resources based on demand, ensuring optimal performance for applications. It also provides features like automatic backups, replication, and multi-AZ deployments for enhanced reliability.</br>Learn more:  | <a href='https://aws.amazon.com/rds/aurora/features/' target='_blank'>Amazon Aurora Features</a> | <a href='https://aws.amazon.com/rds/aurora/pricing/' target='_blank'>Amazon Aurora Pricing</a></br> - <a href='https://aws.amazon.com/redshift/' target='_blank'>Amazon Redshift petabyte-scale data warehouse</a> - relational database management system (RDBMS). It's designed to store data in a structured, tabular format similar to traditional relational databases like PostgreSQL, on which it's based. Redshift is optimized for analytical processing (OLAP), unlike traditional relational databases that are often optimized for online transaction processing (OLTP). This means Redshift excels at handling complex queries across large datasets for reporting and analysis, rather than frequent, small-scale transactions like inserting or updating single rows.</br>Learn more:  | <a href='https://aws.amazon.com/neptune/' target='_blank'>Amazon Neptune</a> | <a href='https://aws.amazon.com/opensearch-service/' target='_blank'>Amazon OpenSearch Service</a> | <a href='https://aws.amazon.com/elasticache/' target='_blank'>Amazon ElastiCache</a><br>_______________________________________</br>Learn more: <a href='https://aws.amazon.com/rds/' target='_blank'>Amazon RDS</a> | <a href='https://aws.amazon.com/rds/features/' target='_blank'>Amazon RDS Features</a> | <a href='https://aws.amazon.com/rds/instance-types/' target='_blank'>Amazon RDS Instance Types</a> | <a href='https://aws.amazon.com/rds/pricing/' target='_blank'>Amazon RDS Pricing</a> </br></br> 2. NoSQL </br>- Amazon DynamoDB is a NoSQL database, meaning it operates without a fixed schema, allowing for greater flexibility in storing and managing data.DynamoDB can store data in formats like key-value pairs or documents, accommodating both structured, semi-structured, and unstructured data. DynamoDB is optimized for high-speed lookups based on a primary key or secondary index, rather than complex joins across multiple tables.It is particularly well-suited for high-performance applications that require fast access to large volumes of unstructured or semi-structured data, like real-time data processing, IoT, and mobile applications. </br>Learn more: <a href='https://aws.amazon.com/dynamodb/' target='_blank'>Amazon DynamoDB</a> | <a href='https://aws.amazon.com/nosql/key-value/#topic-0' target='_blank'>Key-Value Database</a> | <a href='https://aws.amazon.com/nosql/key-value/#topic-0' target='_blank'>DynamoDB DAX</a> (an in-memory cache, that reduces the response times of “eventually consistent read” workloads by an order of magnitude from single-digit milliseconds to microseconds)</br> - AWS ElastiCache: a fully managed in-memory caching service that supports Redis and Memcached. It is designed to improve application performance by caching frequently accessed data in memory, reducing the need to access slower disk-based storage. ElastiCache can be used to accelerate database queries, session management, real-time analytics, and other use cases where low-latency access to data is critical. AWS ElastiCache is fundamentally a NoSQL service. It operates as an in-memory data store and caching layer, primarily supporting two popular open-source engines: Valkey (compatible with Redis OSS) and Memcached.</br>Learn more: <a href='https://aws.amazon.com/elasticache/' target='_blank'>Amazon ElastiCache</a> | <a href='https://aws.amazon.com/elasticache/features/' target='_blank'>Amazon ElastiCache Features</a> | <a href='https://aws.amazon.com/elasticache/pricing/' target='_blank'>Amazon ElastiCache Pricing</a> </br> 3. Other:</br> - <a href='https://aws.amazon.com/emr/#:~:text=Why%20Amazon%20EMR?,operational%20overhead%20of%20traditional%20solutions.' target='_blank'>Amazon EMR</a> - (Elastic MapReduce) a big data processing platform that can leverage both SQL-based and NoSQL-based frameworks and tools to process data stored in various locations.</br>Learn more: <a href='https://aws.amazon.com/emr/features/hadoop/#topic-0' target='_blank'>Hadoop on Amazon EMR</a> (harnessing big data in the cloud)</br> - <a href='https://aws.amazon.com/athena/#:~:text=Why%20Amazon%20Athena?,your%20preferred%20tools%20and%20frameworks' target='_blank'>Amazon Athena</a> - acts as a SQL query engine that sits on top of your data in S3, allowing you to run interactive queries without managing any database infrastructure. Ahtena is serverless, so there is no infrastructure to manage, and you pay only for the queries you run.</br> - <a href='https://aws.amazon.com/quicksight/features/#:~:text=QuickSight%20empowers%20your%20users%20to,monetizing%20and%20differentiating%20your%20applications.' target='_blank'>Amazon QuickSight</a> - Amazon QuickSight has a serverless architecture that automatically scales to hundreds of thousands of users without the need to set up, configure, or manage your own servers. It also ensures that your users don't have to deal with slow dashboards during peak hours, when multiple business intelligence (BI) users are accessing the same dashboards or datasets.</br> - <a href='https://aws.amazon.com/documentdb/' target='_blank'>Amazon DocumentDB</a> is a fast, scalable, highly available, and fully managed document database service offered by AWS. It's designed to support MongoDB workloads, making it easy to store, query, and index JSON data. DocumentDB is considered a NoSQL database because it stores data in JSON-like documents rather than in a traditional relational format. This flexible schema allows for faster and more iterative development, as you can change the data structure without altering the database itself.</br> - <a href='https://pages.awscloud.com/AWS-Learning-Path-Getting-Started-with-Amazon-Neptune_2020_LP_0009-DAT.html#:~:text=1:14:57-,Description,network%20security%20applications%20using%20Neptune.' target='_blank'>Amazon Neptune</a> is a fully managed, purpose-built graph database service provided by AWS. It's designed for use cases where relationships between data are as important as the data itself, enabling efficient storage and querying of highly connected datasets. Unlike traditional relational databases that use tables to store data, graph databases represent data as a network of interconnected entities.</br> - <a href='https://aws.amazon.com/timestream/#:~:text=Timestream%20is%20a%20fast%2C%20scalable,high%20availability%2C%20and%20manual%20backups.' target='_blank'>Amazon Timestream</a> Amazon Timestream is a fully managed, fast, scalable, and serverless time-series database service offered by AWS. It's designed to efficiently handle the high ingestion rates, storage, and querying of time-series data at scale. Time-series data is a sequence of data points recorded over time at regular intervals. It's commonly used to track metrics that change over time.</br> - <a href='https://pixelplex.io/blog/aws-and-blockchain-explained/' target='_blank'>Amazon Managed Blockchain (AMB)</a> is a fully managed service offered by AWS that simplifies the creation, deployment, and management of scalable blockchain networks. It allows you to build applications where multiple parties can securely and transparently run transactions and share data without the need for a trusted, central authority.</br> - <a href='https://docs.aws.amazon.com/whitepapers/latest/big-data-analytics-options/aws-glue.html#:~:text=AWS%20Glue%20is%20a%20serverless,data%20has%20changed%20over%20time.' target='_blank'>AWS Glue: your serverless data integration service.</a> A fully managed, serverless Extract, Transform, and Load (ETL) service provided by Amazon Web Services (AWS) that simplifies and automates the process of data integration. It helps you prepare and combine data from various sources for analytics, machine learning, and application development. The AWS GLUE DATA CATALOG is a central repository  to store structural and operational metadata for all your data assets.</br> - <a href='https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html#:~:text=AWS%20Database%20Migration%20Service%20(AWS,sources%20and%20targets%20in%20sync.' target='_blank'>AWS Database Migration Service (AWS DMS)</a> - a managed AWS service designed to help you migrate relational databases, data warehouses, NoSQL databases, and other data stores to AWS quickly and securely. It supports both homogeneous and heterogeneous migrations, meaning you can migrate between the same database engines (e.g., MySQL to MySQL) or different ones (e.g., Oracle to PostgreSQL). The sourse database remaind fully operational during the migration, minimizing downtimem to applications that rely on the database.</br> - <a href='https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html#:~:text=Amazon%20Quantum%20Ledger%20Database%20(Amazon%20QLDB)%20is%20a%20fully%20managed,history%20of%20changes%20over%20time.' target='_blank'>AWS QLDB (Quantum Ledger Database)</a> - Amazon QLDB is a fully managed ledger database that provides a transparent, immutable, and cryptographically verifiable transaction log. It's designed for applications that need a complete and verifiable history of all changes made to the data, such as financial transactions, supply chain tracking, or compliance records.",
           code: `# Create RDS instance
-                              aws rds create-db-instance --db-instance-identifier mydbinstance --db-instance-class db.t3.micro --engine mysql --master-username admin --master-user-password mypassword --allocated-storage 20
+                                    aws rds create-db-instance --db-instance-identifier mydbinstance --db-instance-class db.t3.micro --engine mysql --master-username admin --master-user-password mypassword --allocated-storage 20
 
-                              # List RDS instances
-                              aws rds describe-db-instances`,
+                                    # List RDS instances
+                                    aws rds describe-db-instances`,
         },
         {
           id: 7,
@@ -511,10 +511,10 @@
           detailDescription:
             "AWS Lambda lets you run code without provisioning or managing servers. You pay only for the compute time you consume. With Lambda, you can run code for virtually any type of application or backend service - all with zero administration. Lambda runs your code on a high-availability compute infrastructure.",
           code: `# Create Lambda function
-                              aws lambda create-function --function-name MyFunction --runtime python3.9 --role arn:aws:iam::123456789012:role/execution_role --handler lambda_function.lambda_handler --zip-file fileb://function.zip
+                                    aws lambda create-function --function-name MyFunction --runtime python3.9 --role arn:aws:iam::123456789012:role/execution_role --handler lambda_function.lambda_handler --zip-file fileb://function.zip
 
-                              # Invoke Lambda function
-                              aws lambda invoke --function-name MyFunction --payload '{"key":"value"}' response.json`,
+                                    # Invoke Lambda function
+                                    aws lambda invoke --function-name MyFunction --payload '{"key":"value"}' response.json`,
         },
         {
           id: 8,
@@ -523,10 +523,10 @@
           detailDescription:
             "Amazon CloudWatch is a monitoring and observability service built for DevOps engineers, developers, site reliability engineers (SREs), and IT managers. CloudWatch provides data and actionable insights to monitor applications, respond to system-wide performance changes, optimize resource utilization, and get a unified view of operational health.",
           code: `# Create CloudWatch alarm
-                              aws cloudwatch put-metric-alarm --alarm-name cpu-mon --alarm-description "Alarm when CPU exceeds 70%" --metric-name CPUUtilization --namespace AWS/EC2 --statistic Average --period 300 --threshold 70.0 --comparison-operator GreaterThanThreshold
+                                    aws cloudwatch put-metric-alarm --alarm-name cpu-mon --alarm-description "Alarm when CPU exceeds 70%" --metric-name CPUUtilization --namespace AWS/EC2 --statistic Average --period 300 --threshold 70.0 --comparison-operator GreaterThanThreshold
 
-                              # List CloudWatch metrics
-                              aws cloudwatch list-metrics --namespace AWS/EC2`,
+                                    # List CloudWatch metrics
+                                    aws cloudwatch list-metrics --namespace AWS/EC2`,
         },
         {
           id: 9,
@@ -535,13 +535,13 @@
           detailDescription:
             "Amazon Route 53 is a highly available and scalable cloud Domain Name System (DNS) web service. It is designed to give developers and businesses an extremely reliable and cost-effective way to route end users to Internet applications by translating names like www.example.com into numeric IP addresses.",
           code: `# Create hosted zone
-                              aws route53 create-hosted-zone --name example.com --caller-reference 2023-01-01-01
+                                    aws route53 create-hosted-zone --name example.com --caller-reference 2023-01-01-01
 
-                              # List hosted zones
-                              aws route53 list-hosted-zones
+                                    # List hosted zones
+                                    aws route53 list-hosted-zones
 
-                              # Create DNS record
-                              aws route53 change-resource-record-sets --hosted-zone-id Z123456789 --change-batch file://change-batch.json`,
+                                    # Create DNS record
+                                    aws route53 change-resource-record-sets --hosted-zone-id Z123456789 --change-batch file://change-batch.json`,
         },
         {
           id: 10,
@@ -550,13 +550,13 @@
           detailDescription:
             "AWS CloudFormation provides a common language for you to model and provision AWS and third-party application resources in your cloud environment. CloudFormation allows you to use programming languages or a simple text file to model and provision, in an automated and secure manner, all the resources needed for your applications.",
           code: `# Deploy CloudFormation stack
-                              aws cloudformation create-stack --stack-name my-stack --template-body file://template.yaml --parameters ParameterKey=KeyName,ParameterValue=MyKey
+                                    aws cloudformation create-stack --stack-name my-stack --template-body file://template.yaml --parameters ParameterKey=KeyName,ParameterValue=MyKey
 
-                              # List CloudFormation stacks
-                              aws cloudformation list-stacks
+                                    # List CloudFormation stacks
+                                    aws cloudformation list-stacks
 
-                              # Update stack
-                              aws cloudformation update-stack --stack-name my-stack --template-body file://updated-template.yaml`,
+                                    # Update stack
+                                    aws cloudformation update-stack --stack-name my-stack --template-body file://updated-template.yaml`,
         },
         {
           id: 11,
@@ -565,13 +565,13 @@
           detailDescription:
             "Amazon Simple Notification Service (SNS) is a highly available, durable, secure, fully managed pub/sub messaging service that enables you to decouple microservices, distributed systems, and event-driven serverless applications. SNS provides topics for high-throughput, push-based, many-to-many messaging.",
           code: `# Create SNS topic
-                              aws sns create-topic --name MyTopic
+                                    aws sns create-topic --name MyTopic
 
-                              # Subscribe to topic
-                              aws sns subscribe --topic-arn arn:aws:sns:us-east-1:123456789012:MyTopic --protocol email --notification-endpoint myemail@example.com
+                                    # Subscribe to topic
+                                    aws sns subscribe --topic-arn arn:aws:sns:us-east-1:123456789012:MyTopic --protocol email --notification-endpoint myemail@example.com
 
-                              # Publish message
-                              aws sns publish --topic-arn arn:aws:sns:us-east-1:123456789012:MyTopic --message "Hello World"`,
+                                    # Publish message
+                                    aws sns publish --topic-arn arn:aws:sns:us-east-1:123456789012:MyTopic --message "Hello World"`,
         },
         {
           id: 12,
@@ -580,13 +580,13 @@
           detailDescription:
             "Amazon Simple Queue Service (SQS) is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications. SQS eliminates the complexity and overhead associated with managing and operating message-oriented middleware.",
           code: `# Create SQS queue
-                              aws sqs create-queue --queue-name MyQueue
+                                    aws sqs create-queue --queue-name MyQueue
 
-                              # Send message to queue
-                              aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue --message-body "Hello SQS"
+                                    # Send message to queue
+                                    aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue --message-body "Hello SQS"
 
-                              # Receive messages
-                              aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue`,
+                                    # Receive messages
+                                    aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue`,
         },
         {
           id: 13,
@@ -595,13 +595,13 @@
           detailDescription:
             "AWS security is built on a foundation of core principles: maintaining the confidentiality, integrity, and availability of your data and cloud resources. The AWS Shared Responsibility Model defines security responsibilities between AWS and customers. Understanding and implementing security best practices is crucial for protecting your AWS environment.",
           code: `# Enable MFA for root account
-                              aws iam create-virtual-mfa-device --virtual-mfa-device-name root-account-mfa-device --path /
+                                    aws iam create-virtual-mfa-device --virtual-mfa-device-name root-account-mfa-device --path /
 
-                              # Enable CloudTrail logging
-                              aws cloudtrail create-trail --name myCloudTrail --s3-bucket-name myCloudTrail-bucket
+                                    # Enable CloudTrail logging
+                                    aws cloudtrail create-trail --name myCloudTrail --s3-bucket-name myCloudTrail-bucket
 
-                              # Configure security group
-                              aws ec2 create-security-group --group-name MySecurityGroup --description "My security group" --vpc-id vpc-12345678`,
+                                    # Configure security group
+                                    aws ec2 create-security-group --group-name MySecurityGroup --description "My security group" --vpc-id vpc-12345678`,
         },
         {
           id: 14,
@@ -610,13 +610,13 @@
           detailDescription:
             "AWS offers multiple pricing models to help you optimize costs based on your needs. These include On-Demand (pay for what you use), Reserved Instances (commit to usage for discounts), Spot Instances (bid for unused capacity), and Savings Plans (flexible pricing model). Understanding these options helps optimize costs.",
           code: `# View AWS billing and cost management
-                              aws ce get-cost-and-usage --time-period Start=2023-01-01,End=2023-01-31 --granularity MONTHLY --metrics BlendedCost
+                                    aws ce get-cost-and-usage --time-period Start=2023-01-01,End=2023-01-31 --granularity MONTHLY --metrics BlendedCost
 
-                              # Create budget
-                              aws budgets create-budget --account-id 123456789012 --budget file://budget.json
+                                    # Create budget
+                                    aws budgets create-budget --account-id 123456789012 --budget file://budget.json
 
-                              # List Reserved Instances
-                              aws ec2 describe-reserved-instances`,
+                                    # List Reserved Instances
+                                    aws ec2 describe-reserved-instances`,
         },
         {
           id: 15,
@@ -625,10 +625,10 @@
           detailDescription:
             "AWS offers four support plans: Basic (free), Developer ($29/month), Business ($100/month), and Enterprise ($15,000/month). Each plan provides different levels of support, response times, and access to AWS experts. Choose based on your business needs and criticality of your AWS workloads.",
           code: `# Create support case (requires Business or Enterprise support)
-                              aws support create-case --subject "My support case" --service-code "amazon-ec2" --severity-code "low" --category-code "instance-issue" --communication-body "Description of the issue"
+                                    aws support create-case --subject "My support case" --service-code "amazon-ec2" --severity-code "low" --category-code "instance-issue" --communication-body "Description of the issue"
 
-                              # List support cases
-                              aws support describe-cases`,
+                                    # List support cases
+                                    aws support describe-cases`,
         },
         {
           id: 16,
@@ -637,21 +637,21 @@
           detailDescription:
             "The AWS Well-Architected Framework describes key concepts, design principles, and architectural best practices for designing and running workloads in the cloud. The framework is based on six pillars: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, and Sustainability.",
           code: `# Well-Architected Tool commands
-                              aws wellarchitected list-workloads
+                                    aws wellarchitected list-workloads
 
-                              # Create workload review
-                              aws wellarchitected create-workload --workload-name "MyWorkload" --description "Sample workload" --environment PRODUCTION --review-owner "architect@company.com"
+                                    # Create workload review
+                                    aws wellarchitected create-workload --workload-name "MyWorkload" --description "Sample workload" --environment PRODUCTION --review-owner "architect@company.com"
 
-                              # Architecture principles in CloudFormation
-                              Resources:
-                                MyInstance:
-                                  Type: AWS::EC2::Instance
-                                  Properties:
-                                    ImageId: ami-0abcdef1234567890
-                                    InstanceType: t3.micro
-                                    Tags:
-                                      - Key: Purpose
-                                        Value: WellArchitected`,
+                                    # Architecture principles in CloudFormation
+                                    Resources:
+                                      MyInstance:
+                                        Type: AWS::EC2::Instance
+                                        Properties:
+                                          ImageId: ami-0abcdef1234567890
+                                          InstanceType: t3.micro
+                                          Tags:
+                                            - Key: Purpose
+                                              Value: WellArchitected`,
         },
         {
           id: 17,
@@ -660,13 +660,13 @@
           detailDescription:
             "Amazon Elastic Block Store (EBS) provides high-performance block storage for use with EC2 instances. EBS volumes are highly available and reliable storage volumes that can be attached to any running instance in the same Availability Zone. EBS offers different volume types optimized for different use cases.",
           code: `# Create EBS volume
-                              aws ec2 create-volume --size 80 --region us-east-1 --availability-zone us-east-1a --volume-type gp3
+                                    aws ec2 create-volume --size 80 --region us-east-1 --availability-zone us-east-1a --volume-type gp3
 
-                              # Attach volume to instance
-                              aws ec2 attach-volume --volume-id vol-1234567890abcdef0 --instance-id i-1234567890abcdef0 --device /dev/sdf
+                                    # Attach volume to instance
+                                    aws ec2 attach-volume --volume-id vol-1234567890abcdef0 --instance-id i-1234567890abcdef0 --device /dev/sdf
 
-                              # Create snapshot
-                              aws ec2 create-snapshot --volume-id vol-1234567890abcdef0 --description "My snapshot"`,
+                                    # Create snapshot
+                                    aws ec2 create-snapshot --volume-id vol-1234567890abcdef0 --description "My snapshot"`,
         },
         {
           id: 18,
@@ -675,25 +675,34 @@
           detailDescription:
             "AWS Auto Scaling monitors your applications and automatically adjusts capacity to maintain steady, predictable performance at the lowest possible cost. Using Auto Scaling, it's easy to setup application scaling for multiple resources across multiple services in minutes.",
           code: `# Create launch template
-                              aws ec2 create-launch-template --launch-template-name MyLaunchTemplate --version-description "Version 1" --launch-template-data file://launch-template-data.json
+                                    aws ec2 create-launch-template --launch-template-name MyLaunchTemplate --version-description "Version 1" --launch-template-data file://launch-template-data.json
 
-                              # Create Auto Scaling group
-                              aws autoscaling create-auto-scaling-group --auto-scaling-group-name MyAutoScalingGroup --launch-template LaunchTemplateName=MyLaunchTemplate,Version=1 --min-size 1 --max-size 3 --desired-capacity 2`,
+                                    # Create Auto Scaling group
+                                    aws autoscaling create-auto-scaling-group --auto-scaling-group-name MyAutoScalingGroup --launch-template LaunchTemplateName=MyLaunchTemplate,Version=1 --min-size 1 --max-size 3 --desired-capacity 2`,
         },
         {
           id: 19,
-          title: "Elastic Load Balancing",
-          description: "Distribute traffic across instances",
+          title: "Docker",
+          description:
+            "AWS offers several services that enable you to deploy, manage, and scale these Docker containers in the cloud.",
           detailDescription:
-            "Elastic Load Balancing automatically distributes incoming application traffic across multiple targets, such as Amazon EC2 instances, containers, IP addresses, Lambda functions, and virtual appliances. It can handle the varying load of your application traffic in a single Availability Zone or across multiple Availability Zones.",
-          code: `# Create Application Load Balancer
-                              aws elbv2 create-load-balancer --name MyLoadBalancer --subnets subnet-12345678 subnet-87654321
+            "Here's a breakdown of how Docker works with AWS:</br></br>1. Build your Docker image: First, you define your application's environment and dependencies in a Dockerfile. This file acts as a blueprint for building your container image.</br>2. Store your Docker image: You push your Docker images to a container registry for storage and version control. Amazon Elastic Container Registry (ECR) is a fully managed Docker container registry integrated with AWS services.</br>3. Deploy and manage containers using AWS Services: AWS provides several services for running and managing your Docker containers at scale:</br> ---> a) Amazon Elastic Container Service (ECS): This is a highly scalable container orchestration service that allows you to run, stop, and manage Docker containers on a cluster. ECS offers two main launch types:</br> ------------> ECS on EC2: You manage your own EC2 instances (virtual servers) as the underlying infrastructure for your containers, giving you more control over the environment.</br> ------------> AWS Fargate: This provides a serverless compute engine for containers, meaning AWS manages the underlying infrastructure for you, simplifying deployment and management. You simply specify your container image and resource requirements.</br> ---> b) Amazon Elastic Kubernetes Service (EKS): This is a managed Kubernetes service that makes it easier to run Kubernetes on AWS without needing to install, operate, and maintain your own Kubernetes control plane. EKS offers powerful container orchestration capabilities for large-scale deployments, according to cloudonaut. </br> ---> c) AWS Elastic Beanstalk: This service simplifies the deployment and scaling of web applications, including those using Docker containers. Elastic Beanstalk automates the provisioning and management of underlying resources for your application.</br> 4. Integrate with other AWS services: These container services integrate seamlessly with other AWS services, including:</br> * Elastic Load Balancing (ELB): For distributing traffic across your container instances.</br> * Amazon VPC: For networking and isolating your containerized applications.</br> * AWS Identity and Access Management (IAM): For controlling access to your container resources. </br> * AWS CloudWatch: For monitoring the performance and health of your containers.</br></br>In essence, Docker provides the building blocks for containerizing your applications, and AWS offers a powerful and flexible platform to deploy, manage, and scale those Docker containers efficiently in the cloud. Learn more: <a href='https://aws.amazon.com/docker/' target='_blank'>AWS Docker</a> | <a href='https://aws.amazon.com/ecs/' target='_blank'>Amazon ECS</a> | <a href='https://aws.amazon.com/eks/' target='_blank'>Amazon EKS</a> | <a href='https://aws.amazon.com/fargate/' target='_blank'>AWS Fargate</a>",
+          code: `# Build the Docker image locally
+                                    docker build -t hello-world .
+                                    aws elbv2 create-load-balancer --name my-load-balancer --subnets subnet-12345678 subnet-87654321 --security-groups sg-12345678
 
-                              # Create target group
-                              aws elbv2 create-target-group --name MyTargets --protocol HTTP --port 80 --vpc-id vpc-12345678
+                                    # Authenticate Docker to your ECR registry
+                                    aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com
+                                    # Push the Docker image to ECR
+                                    docker tag hello-world:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/hello-world:latest
+                                    docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/hello-world:latest              
 
-                              # Register targets
-                              aws elbv2 register-targets --target-group-arn arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/MyTargets/1234567890123456 --targets Id=i-1234567890abcdef0`,
+                                    # Create an ECR repository
+                                    aws ecr create-repository \
+  --repository-name hello-world \
+  --image-scanning-configuration scanOnPush=true \
+  --region <region>
+`,
         },
         {
           id: 20,
@@ -702,20 +711,20 @@
           detailDescription:
             "AWS provides various migration strategies known as the '6 Rs': Rehost (lift-and-shift), Replatform (lift-tinker-and-shift), Repurchase (drop-and-shop), Refactor/re-architect, Retire, and Retain. Each strategy offers different benefits and complexity levels for moving applications to the cloud.",
           code: `# AWS Application Migration Service
-                              aws mgn initialize-service
+                                    aws mgn initialize-service
 
-                              # Create migration job
-                              aws mgn start-replication --source-server-id s-1234567890abcdef0
+                                    # Create migration job
+                                    aws mgn start-replication --source-server-id s-1234567890abcdef0
 
-                              # AWS Database Migration Service
-                              aws dms create-replication-instance --replication-instance-identifier myrepinstance --replication-instance-class dms.t3.micro
+                                    # AWS Database Migration Service
+                                    aws dms create-replication-instance --replication-instance-identifier myrepinstance --replication-instance-class dms.t3.micro
 
-                              # Migration assessment
-                              aws migrationhub list-migration-tasks`,
+                                    # Migration assessment
+                                    aws migrationhub list-migration-tasks`,
         },
       ];
 
-      let completedTopics = [1, 2, 3, 4, 5, 6];
+      let completedTopics = [1, 2, 3, 4, 5, 6, 19];
       let currentTopicId = null;
 
       function renderTiles() {
@@ -730,22 +739,22 @@
           tile.onclick = () => openDetail(topic.id);
 
           tile.innerHTML = `
-                                                  <div class="tile-content">
-                                                      <span class="tile-number">${topic.id
-                                                        .toString()
-                                                        .padStart(
-                                                          2,
-                                                          "0"
-                                                        )}</span>
-                                                      <h3 class="tile-title">${
-                                                        topic.title
-                                                      }</h3>
-                                                      <p class="tile-description">${
-                                                        topic.description
-                                                      }</p>
-                                                  </div>
-                                                  <div class="progress-indicator"></div>
-                                              `;
+                                                        <div class="tile-content">
+                                                            <span class="tile-number">${topic.id
+                                                              .toString()
+                                                              .padStart(
+                                                                2,
+                                                                "0"
+                                                              )}</span>
+                                                            <h3 class="tile-title">${
+                                                              topic.title
+                                                            }</h3>
+                                                            <p class="tile-description">${
+                                                              topic.description
+                                                            }</p>
+                                                        </div>
+                                                        <div class="progress-indicator"></div>
+                                                    `;
 
           grid.appendChild(tile);
         });
