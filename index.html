@@ -630,23 +630,37 @@
                                     # Subscribe to topic
                                     aws sns subscribe --topic-arn arn:aws:sns:us-east-1:123456789012:MyTopic --protocol email --notification-endpoint myemail@example.com
 
-                                    # Publish message
-                                    aws sns publish --topic-arn arn:aws:sns:us-east-1:123456789012:MyTopic --message "Hello World"`,
+                # Publish message
+                                    aws sns publish --topic-arn arn:aws:sns:us-east-1:123456789012:MyTopic --message "Hello World"
+                                    # Create SQS queue
+                                    aws sqs create-queue --queue-name MyQueue
+
+                 # Send message to queue
+                                    aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue --message-body "Hello SQS"
+
+                 # Receive messages
+                                    aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue`,
         },
         {
           id: 12,
-          title: "Amazon SQS Queues",
-          description: "Simple queue service",
+          title: "Cloud monitoring",
+          description:
+            "CloudWatch, CloudTrail, X-Ray, EventBridge, CodeGuru, AWS Health Dashboard",
           detailDescription:
-            "Amazon Simple Queue Service (SQS) is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications. SQS eliminates the complexity and overhead associated with managing and operating message-oriented middleware.",
-          code: `# Create SQS queue
-                                    aws sqs create-queue --queue-name MyQueue
+            "CloudWatch is a monitoring and observability service that provides data and actionable insights for AWS, hybrid, and on-premises applications and infrastructure resources. It collects monitoring and operational data in the form of logs, metrics, and events, providing you with a unified view of your AWS resources, applications, and services.</br>CloudTrail is a service that enables governance, compliance, operational auditing, and risk auditing of your AWS account. With CloudTrail, you can log, continuously monitor, and retain account activity related to actions across your AWS infrastructure. This helps you track changes made to your AWS resources and provides an event history for security analysis and troubleshooting.</br>Learn more: <a href='https://aws.amazon.com/cloudwatch/' target='_blank'>Amazon CloudWatch</a> | <a href='https://aws.amazon.com/cloudwatch/features/' target='_blank'>Amazon CloudWatch Features</a> | <a href='https://aws.amazon.com/cloudwatch/pricing/' target='_blank'>Amazon CloudWatch Pricing</a> | <a href='https://aws.amazon.com/cloudtrail/' target='_blank'>AWS CloudTrail</a> | <a href='https://aws.amazon.com/cloudtrail/features/' target='_blank'>AWS CloudTrail Features</a> | <a href='https://aws.amazon.com/cloudtrail/pricing/' target='_blank'>AWS CloudTrail Pricing</a></br></br>X-Ray is an AWS service that helps developers analyze and debug production, distributed applications, such as those built using a microservices architecture. With X-Ray, you can understand how your application and its underlying services are performing to identify and troubleshoot the root cause of performance issues and errors.</br>Learn more: <a href='https://aws.amazon.com/xray/' target='_blank'>AWS X-Ray</a> | <a href='https://aws.amazon.com/xray/features/' target='_blank'>AWS X-Ray Features</a> | <a href='https://aws.amazon.com/xray/pricing/' target='_blank'>AWS X-Ray Pricing</a></br></br>EventBridge is a serverless event bus service that makes it easy to connect applications using data from your own applications, integrated Software-as-a-Service (SaaS) applications, and AWS services. EventBridge delivers a stream of real-time data from event sources to targets like AWS Lambda.</br>Learn more: <a href='https://aws.amazon.com/eventbridge/' target='_blank'>Amazon EventBridge</a> | <a href='https://aws.amazon.com/eventbridge/features/' target='_blank'>Amazon EventBridge Features</a> | <a href='https://aws.amazon.com/eventbridge/pricing/' target='_blank'>Amazon EventBridge Pricing</a></br></br>AWS CodeGuru is a developer tool that provides intelligent recommendations to improve code quality and identify an application's most expensive lines of code. It uses machine learning and automated reasoning to analyze your code and provide suggestions for improvements.</br>Learn more: <a href='https://aws.amazon.com/codeguru/' target='_blank'>AWS CodeGuru</a> | <a href='https://aws.amazon.com/codeguru/features/' target='_blank'>AWS CodeGuru Features</a> | <a href='https://aws.amazon.com/codeguru/pricing/' target='_blank'>AWS CodeGuru Pricing</a></br></br>AWS Health Dashboard provides personalized views of the health of AWS services, helping you manage events in progress and plan for scheduled activities. It offers detailed information about service disruptions, planned maintenance, and other events that may impact your AWS resources.</br>Learn more: <a href='https://aws.amazon.com/premiumsupport/technology/aws-health-dashboard/' target='_blank'>AWS Health Dashboard</a></br></br>CodeGuru is a developer tool that provides intelligent recommendations to improve code quality and identify an application's most expensive lines of code. It uses machine learning and automated reasoning to analyze your code and provide suggestions for improvements.</br>Learn more: <a href='https://aws.amazon.com/codeguru/' target='_blank'>AWS CodeGuru</a> | <a href='https://aws.amazon.com/codeguru/features/' target='_blank'>AWS CodeGuru Features</a> | <a href='https://aws.amazon.com/codeguru/pricing/' target='_blank'>AWS CodeGuru Pricing</a></br></br>AWS Health Dashboard provides personalized views of the health of AWS services, helping you manage events in progress and plan for scheduled activities. It offers detailed information about service disruptions, planned maintenance, and other events that may impact your AWS resources.</br>Learn more: <a href='https://aws.amazon.com/premiumsupport/technology/aws-health-dashboard/' target='_blank'>AWS Health Dashboard</a>",
+          code: `# Create CloudWatch alarm
+                                    aws cloudwatch put-metric-alarm --alarm-name cpu-mon --alarm-description "Alarm when CPU exceeds 70%" --metric-name CPUUtilization --namespace AWS/EC2 --statistic Average --period 300 --threshold 70.0 --comparison-operator GreaterThanThreshold
 
-                                    # Send message to queue
-                                    aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue --message-body "Hello SQS"
+                                    # List CloudWatch metrics
+                                    aws cloudwatch list-metrics --namespace AWS/EC2
 
-                                    # Receive messages
-                                    aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue`,
+                                    # Create CloudTrail trail
+                                    aws cloudtrail create-trail --name myTrail --s3-bucket-name myTrail-bucket
+
+                # Start logging
+                                    aws cloudtrail start-logging --name myTrail
+                 # Describe trails
+                            `,
         },
         {
           id: 13,
@@ -784,7 +798,7 @@
         },
       ];
 
-      let completedTopics = [1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 10, 11];
+      let completedTopics = [1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 10, 11, 12];
       let currentTopicId = null;
 
       function renderTiles() {
